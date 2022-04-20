@@ -1,3 +1,15 @@
 body{
     background-color: #e2e2e2!important;
 }
+
+.bg-primary{
+    background: #009688!important;
+}
+
+.banner{
+    width: 100%;
+    height: 93vh;
+    background:linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,.8)), url("https://www.johnacademy.co.uk/wp-content/uploads/2017/12/MICROSOFT-OFFICE-BUSINESS-CONTACT-MANAGER-3-1.jpg");
+    color: white;
+    background-size: cover ;
+}
