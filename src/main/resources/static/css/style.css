@@ -13,3 +13,8 @@ body{
     color: white;
     background-size: cover ;
 }
+
+.my-card{
+    padding: 20px;
+    background: #FFFFFF;
+}
