@@ -1,0 +1,27 @@
+package com.contact.manager.entity;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "contact")
+@NoArgsConstructor
+@Data
+public class Contact {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer contactId;
+    private String name;
+    private String secondName;
+    private String work;
+    private String email;
+    private String phone;
+    private String image;
+    @Column(length = 5000)
+    private String  description;
+    @ManyToOne()
+    @JoinColumn(name = "userId")
+    private User user;
+}
