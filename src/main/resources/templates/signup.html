@@ -15,10 +15,17 @@
                 <th:block th:text="${#session.removeAttribute('message')}"></th:block>
             </div>
           <h1 class="text-center">Register Here !!</h1>
-            <form action="" th:action="@{/do_register}" method="post" th:object="${user}">
+            <form novalidate action="" th:action="@{/do_register}" method="post" th:object="${user}">
                 <div class="form-group">
                     <label for="name">Your Name</label>
-                    <input class="form-control" type="text" id="name" name="name" placeholder="Enter here" required th:value="${user.name}">
+                    <input class="form-control"
+                           th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}"
+                           type="text" id="name"
+                           name="name" placeholder="Enter here"
+                           required th:value="${user.name}"/>
+                    <div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+                    </div>
+
                 </div>
                 <div class="form-group">
                     <label for="email">Your Email</label>
@@ -29,7 +36,7 @@
                     <input class="form-control" type="password" id="password" name="password" placeholder="Enter here" required th:value="${user.password}">
                 </div>
                 <div class="form-group">
-                    <textarea name="about"  placeholder="Enter something yourself" rows="7" class="form-control"required th:value="${user.about}"></textarea>
+                    <textarea name="about"  placeholder="Enter something yourself" rows="7" class="form-control"required th:text="${user.about}"></textarea>
                 </div>
                 <div class="form-group form-check text-center">
                     <input type="checkbox" name="agreement" class="form-check-input" id="agreement">
