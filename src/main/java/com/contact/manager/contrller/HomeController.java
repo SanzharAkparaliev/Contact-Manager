@@ -36,7 +36,10 @@ public class HomeController {
     }
 
     @PostMapping("/do_register")
-    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result, @RequestParam(value = "agreement",defaultValue = "false")
+    public String registerUser(@Valid @ModelAttribute("user") User user,
+                               BindingResult result,
+                               @RequestParam(value = "agreement",
+                                       defaultValue = "false")
     Boolean agreement, Model model, HttpSession session){
        try {
            if(!agreement){
@@ -65,5 +68,11 @@ public class HomeController {
            session.setAttribute("message",new Message("Something Went wrong !! " + e.getMessage(),"alert-danger"));
            return "signup";
        }
+    }
+
+    @GetMapping("/singin")
+    public String customLogin(Model model){
+        model.addAttribute("title","Login Page");
+        return "login";
     }
 }
