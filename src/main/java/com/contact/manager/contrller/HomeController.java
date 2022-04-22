@@ -5,6 +5,7 @@ import com.contact.manager.entity.User;
 import com.contact.manager.helper.Message;
 import com.contact.manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,9 @@ import javax.validation.Valid;
 public class HomeController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     public String home(Model model){
@@ -45,13 +49,14 @@ public class HomeController {
                 return "signup";
            }
 
-           user.setRole("ROLE_USER");
+           user.setRole("ROLE_ADMIN");
            user.setEnabled(true);
            user.setImageUrl("default.png");
+           user.setPassword(passwordEncoder.encode(user.getPassword()));
            System.out.println("Agreement " + agreement);
            System.out.println("User " + user);
            model.addAttribute("user",new User());
-           //userRepository.save(user);
+           userRepository.save(user);
            session.setAttribute("message",new Message("Successfully Register !! " ,"alert-success"));
            return "signup";
        }catch (Exception e){
