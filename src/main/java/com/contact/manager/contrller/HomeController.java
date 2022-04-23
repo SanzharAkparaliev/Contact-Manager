@@ -52,7 +52,7 @@ public class HomeController {
                 return "signup";
            }
 
-           user.setRole("ROLE_ADMIN");
+           user.setRole("ROLE_USER");
            user.setEnabled(true);
            user.setImageUrl("default.png");
            user.setPassword(passwordEncoder.encode(user.getPassword()));
