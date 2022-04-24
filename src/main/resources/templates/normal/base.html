@@ -14,7 +14,7 @@
 <!--    <style>body{ background-color: #e2e2e2!important;}</style>-->
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark  bg-primary">
+<nav class="fixed-top navbar navbar-expand-lg navbar-dark  bg-primary">
     <a class="navbar-brand" href="#">Smart Contact Manager</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -39,18 +39,18 @@
     </div>
 </nav>
 <!--sidebar-->
-<div class="sidebar">
+<div class="sidebar mt-2">
     <span onclick="toggleSidebar()" class="crossBtn">&times;</span>
-    <a  href="#" class="item"><i class="fas fa-home mr-2"></i>Home</a>
+    <a  href="#" th:href="@{/user/index}" class="item"><i class="fas fa-home mr-2"></i>Home</a>
     <a  href="#" class="item"><i class="fas fa-id-card-alt mr-2"></i>View Contact</a>
-    <a  href="#" class="item"><i class="fas fa-pencil-alt mr-2"></i>Add Contact</a>
+    <a  href="#" th:href="@{/user/add-contact}" class="item"><i class="fas fa-pencil-alt mr-2"></i>Add Contact</a>
     <a  href="#" class="item"><i class="fas fa-user-circle mr-2"></i>Your Profile</a>
     <a  href="#" class="item"><i class="fas fa-cogs mr-2"></i>Settings</a>
-    <a  href="#" class="item"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
+    <a  href="#" th:href="@{/logout}" class="item"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
     <div class="divider"></div>
 </div>
 <!--content-->
-<div class="content">
+<div class="content mt-5">
     <i onclick="toggleSidebar()" class="fas fa-bars m-3"></i>
     <div th:replace="${content}"></div>
 </div>
