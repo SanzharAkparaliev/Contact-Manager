@@ -4,6 +4,7 @@
 >
 <head>
     <meta charset="UTF-8">
+    <!-- TinyMCE -->
     <title>User Dashboard</title>
 </head>
 <body>
@@ -28,7 +29,7 @@
                                         <i class="fa fa-plus"></i>
                                     </div>
                                 </div>
-                                <input type="text" id="firstName" name="name" placeholder="Enter Name here" class="form-control">
+                                <input required type="text" id="firstName" name="name" placeholder="Enter Name here" class="form-control">
                             </div>
                             <!-- Last Name-->
                             <div class="input-group mt-3">
@@ -37,7 +38,7 @@
                                         <i class="fa fa-user-alt"></i>
                                     </div>
                                 </div>
-                                <input type="text" id="secondName" name="secondName" placeholder="Enter Nick Name here" class="form-control">
+                                <input required type="text" id="secondName" name="secondName" placeholder="Enter Nick Name here" class="form-control">
                             </div>
                             <!-- Phone field-->
                             <div class="input-group mt-3">
@@ -46,7 +47,7 @@
                                         <i class="fa fa-phone"></i>
                                     </div>
                                 </div>
-                                <input type="number" id="phone" name="phone" placeholder="Enter Phone Number here" class="form-control">
+                                <input required min="10" type="number" id="phone" name="phone" placeholder="Enter Phone Number here" class="form-control">
                             </div>
                             <!-- Email field-->
                             <div class="input-group mt-3">
@@ -55,7 +56,7 @@
                                         @
                                     </div>
                                 </div>
-                                <input type="email" id="email" name="email" placeholder="Enter email here" class="form-control">
+                                <input required type="email" id="email" name="email" placeholder="Enter email here" class="form-control">
                             </div>
                             <!-- Work field-->
                             <div class="input-group mt-3">
@@ -64,11 +65,11 @@
                                      <i class="fa fa-briefcase"></i>
                                     </div>
                                 </div>
-                                <input type="text" id="work" name="work" placeholder="Enter work here" class="form-control">
+                                <input required type="text" id="work" name="work" placeholder="Enter work here" class="form-control">
                             </div>
                             <!-- Contact Description-->
                             <div class="form-group mt-3">
-                            <textarea name="description" id="description"  class="form-control" rows="10" placeholder="Enter contact description"></textarea>
+                            <textarea id="tiny" name="description"   class="form-control" rows="10" placeholder="Enter contact description"></textarea>
                             </div>
                             <!-- Image Field-->
                             <div class="custom-file">
