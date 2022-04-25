@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -62,7 +63,7 @@ public class userController {
             User user = userRepository.getUserByUserName(name);
 
             if(file.isEmpty()){
-
+                contact.setImage("contact.png");
             }else {
                 contact.setImage(file.getOriginalFilename());
                 File saveFile  = new ClassPathResource("static/img").getFile();
@@ -88,12 +89,19 @@ public class userController {
         model.addAttribute("title","Show User Contacts");
         String username = principal.getName();
         User user = userRepository.getUserByUserName(username);
-        Pageable pageable = PageRequest.of(page,3);
+        Pageable pageable = PageRequest.of(page,8);
         Page<Contact> contactList = contactRepository.findContactByUser(user.getUserId().intValue(),pageable);
         model.addAttribute("contacts",contactList);
         model.addAttribute("currentPage",page);
         model.addAttribute("totalPages",contactList.getTotalPages());
         return "normal/show_contacts";
-
     }
+
+   @GetMapping("/{cId}/contact")
+    public String showContactDetail(@PathVariable("cId") Integer cId,Model model){
+       Optional<Contact> contactOptional = contactRepository.findById(cId);
+       Contact contact = contactOptional.get();
+       model.addAttribute("contact",contact);
+       return "normal/contact_detail";
+   }
 }

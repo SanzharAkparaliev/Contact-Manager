@@ -100,7 +100,14 @@
     right: 35px;
     font-size: 36px;
     cursor: pointer;
-}</style>
+}
+    .my_profile_picture{
+        width: 35px;
+        height: 35px;
+        object-fit: cover;
+        border-radius: 25% 10%;;
+    }
+</style>
     <script>
         tinymce.init({
             selector: 'textarea#tiny',
@@ -114,7 +121,6 @@
         })
 
     </script>
-    <!--    <style>body{ background-color: #e2e2e2!important;}</style>-->
 </head>
 <body>
 <nav class="fixed-top navbar navbar-expand-lg navbar-dark  bg-primary">
@@ -179,8 +185,15 @@
                             <tbody>
                             <tr th:each="c : ${contacts}">
                                 <th scope="row" th:text="'SMCUSER' +${ c.contactId}">1</th>
-                                <th th:text="${c.name}">Sanzhar</th>
-                                <th th:text="${c.email}">sanzhar@gmail.com</th>
+                                <th>
+                                    <img class="my_profile_picture" src="" th:src="@{'/img/'+${c.image}}" alt="profile photo">
+                                    <span th:text="${c.name}"></span>
+                                </th>
+                                <th>
+                                    <a th:href="@{'/user/'+${c.contactId}+'/contact'}" href="#">
+                                        <span th:text="${c.email}"></span>
+                                    </a>
+                                </th>
                                 <th th:text="${c.phone}">776262328</th>
                                 <th>
                                     <button class="btn btn-danger btn-sm">Delete</button>
