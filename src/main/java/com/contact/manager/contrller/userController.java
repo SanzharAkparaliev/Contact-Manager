@@ -3,6 +3,7 @@ package com.contact.manager.contrller;
 import com.contact.manager.entity.Contact;
 import com.contact.manager.entity.User;
 import com.contact.manager.helper.Message;
+import com.contact.manager.repository.ContactRepository;
 import com.contact.manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -19,12 +20,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class userController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ContactRepository contactRepository;
     @ModelAttribute
     public void addCommonData(Model model,Principal principal){
         String userName = principal.getName();
@@ -74,5 +78,18 @@ public class userController {
 
         }
         return "normal/add_contact_form";
+    }
+
+
+    @GetMapping("/show-contacts")
+    public String showContact(Model model,Principal principal){
+        model.addAttribute("title","Show User Contacts");
+        String username = principal.getName();
+        User user = userRepository.getUserByUserName(username);
+        List<Contact> contactList = contactRepository.findContactByUser(user.getUserId().intValue());
+        model.addAttribute("contacts",contactList);
+
+        return "normal/show_contacts";
+
     }
 }
