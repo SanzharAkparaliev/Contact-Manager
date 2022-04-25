@@ -7,20 +7,22 @@ import com.contact.manager.repository.ContactRepository;
 import com.contact.manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -81,14 +83,16 @@ public class userController {
     }
 
 
-    @GetMapping("/show-contacts")
-    public String showContact(Model model,Principal principal){
+    @GetMapping("/show-contacts/{page}")
+    public String showContact(@PathVariable("page") Integer page,Model model,Principal principal){
         model.addAttribute("title","Show User Contacts");
         String username = principal.getName();
         User user = userRepository.getUserByUserName(username);
-        List<Contact> contactList = contactRepository.findContactByUser(user.getUserId().intValue());
+        Pageable pageable = PageRequest.of(page,3);
+        Page<Contact> contactList = contactRepository.findContactByUser(user.getUserId().intValue(),pageable);
         model.addAttribute("contacts",contactList);
-
+        model.addAttribute("currentPage",page);
+        model.addAttribute("totalPages",contactList.getTotalPages());
         return "normal/show_contacts";
 
     }
