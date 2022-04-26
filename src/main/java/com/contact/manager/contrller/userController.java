@@ -123,4 +123,12 @@ public class userController {
 
         return "redirect:/user/show-contacts/0";
     }
+
+    @PostMapping("/update-contact/{cId}")
+    public String updateForm(@PathVariable("cId") Integer cId,Model model){
+        model.addAttribute("title","Update Contact");
+        Contact contact = contactRepository.findById(cId).get();
+        model.addAttribute("contact",contact);
+        return "normal/update_form";
+    }
 }

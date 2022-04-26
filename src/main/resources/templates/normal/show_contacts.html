@@ -197,7 +197,9 @@
                                 <th th:text="${c.phone}">776262328</th>
                                 <th>
                                     <a  href="#" th:onclick="|deleteContact(${c.contactId})|" class="btn btn-danger btn-sm">Delete</a>
-                                    <button class="btn btn-primary btn-sm">Delete</button>
+                                    <form method="post" th:action="@{'/user/update-contact/'+${c.contactId}}" class="mt-2">
+                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                    </form>
                                 </th>
                             </tr>
                             </tbody>
