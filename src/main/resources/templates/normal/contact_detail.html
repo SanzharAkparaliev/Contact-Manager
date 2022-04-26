@@ -194,7 +194,7 @@
                         <th:block th:utext="${contact.description}"></th:block>
                     </div>
                     <div class="container mt-3">
-                        <button class="btn btn-danger btn-sm btn-block">Delete</button>
+                        <a href="#" th:onclick="|deleteContact(${contact.contactId})|" class="btn btn-danger btn-sm btn-block">Delete</a>
                         <button class="btn btn-primary btn-sm btn-block">Delete</button>
                     </div>
 
@@ -222,6 +222,25 @@
             $(".sidebar").css("display","block");
             $(".content").css("margin-left","20%")
         }
+    }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function deleteContact(cId){
+        swal({
+            title: "Are you sure?",
+            text: "You want to delete this contact!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location="/user/delete/"+cId;
+                } else {
+                    swal("Your contact is safe!");
+                }
+            });
     }
 </script>
 </body>
