@@ -114,13 +114,13 @@ public class userController {
    }
 
     @GetMapping("/delete/{cId}")
-    public String deleteContact(@PathVariable("cId") Integer cId,Model model,HttpSession session){
+    public String deleteContact(@PathVariable("cId") Integer cId,Model model,HttpSession session,Principal principal){
         Optional<Contact> optionalContact = contactRepository.findById(cId);
         Contact contact = optionalContact.get();
-        contact.setUser(null);
-        contactRepository.delete(contact);
+        User user = userRepository.getUserByUserName(principal.getName());
+        user.getContactList().remove(contact);
+        userRepository.save(user);
         session.setAttribute("message",new Message("Contact deleted succesfully...","success"));
-
         return "redirect:/user/show-contacts/0";
     }
 
