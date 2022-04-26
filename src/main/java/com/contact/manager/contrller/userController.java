@@ -98,10 +98,18 @@ public class userController {
     }
 
    @GetMapping("/{cId}/contact")
-    public String showContactDetail(@PathVariable("cId") Integer cId,Model model){
+    public String showContactDetail(@PathVariable("cId") Integer cId,Model model,Principal principal){
        Optional<Contact> contactOptional = contactRepository.findById(cId);
        Contact contact = contactOptional.get();
-       model.addAttribute("contact",contact);
+
+       String userName = principal.getName();
+       User user = userRepository.getUserByUserName(userName);
+
+       if(user.getUserId() == contact.getUser().getUserId()) {
+        model.addAttribute("title",contact.getName());
+           model.addAttribute("contact", contact);
+       }
+
        return "normal/contact_detail";
    }
 }
