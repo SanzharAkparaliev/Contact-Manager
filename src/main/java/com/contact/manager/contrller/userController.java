@@ -131,4 +131,35 @@ public class userController {
         model.addAttribute("contact",contact);
         return "normal/update_form";
     }
+    @PostMapping("/process-update")
+    public String updateHandler(@ModelAttribute Contact contact,
+                                @RequestParam("profileImage")MultipartFile file,
+                                Model model,HttpSession session
+            ,Principal principal){
+        try {
+            Contact oldContactDetail = contactRepository.findById(contact.getContactId().intValue()).get();
+            if(!file.isEmpty()){
+                //delete old photo
+                File deleteFile  = new ClassPathResource("static/img").getFile();
+                File file1 = new File(deleteFile,oldContactDetail.getImage());
+                file1.delete();
+                //update new photo
+                File saveFile  = new ClassPathResource("static/img").getFile();
+                Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+                Files.copy(file.getInputStream(),path,StandardCopyOption.REPLACE_EXISTING);
+                contact.setImage(file.getOriginalFilename());
+            }else{
+                contact.setImage(oldContactDetail.getImage());
+            }
+            User user = userRepository.getUserByUserName(principal.getName());
+            contact.setUser(user);
+            contactRepository.save(contact);
+            session.setAttribute("message",new Message("Your contact is updated..","success"));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("contact Id" + contact.getContactId());
+        return "redirect:/user/"+contact.getContactId()+"/contact";
+    }
 }

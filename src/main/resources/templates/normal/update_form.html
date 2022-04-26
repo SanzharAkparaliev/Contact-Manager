@@ -182,6 +182,7 @@
                                   th:action="@{/user/process-update}"
                                   class="mt-2"
                             >
+                                <input type="hidden" th:value="${contact.contactId}" name="contactId">
                                 <!-- First Name-->
                                 <div class="input-group">
                                     <div class="input-group-prepend">
