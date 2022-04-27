@@ -1,5 +1,6 @@
 package com.contact.manager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +24,7 @@ public class Contact {
     private String  description;
     @ManyToOne()
     @JoinColumn(name = "userId")
+    @JsonIgnore
     private User user;
 
     @Override

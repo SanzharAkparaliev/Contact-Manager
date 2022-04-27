@@ -107,6 +107,18 @@
         object-fit: cover;
         border-radius: 25% 10%;;
     }
+
+    .search-container{
+        position: relative;
+    }
+    .search-result{
+        position: absolute;
+        background: white;
+        width: 100%;
+        padding: 10px;
+        border:1px solid gray ;
+        display: none;
+    }
 </style>
     <script>
         tinymce.init({
@@ -172,6 +184,13 @@
         <div class="card mr-3 ml-3">
                     <div class="card-body">
                         <h1 class="text-center">Your Contacts</h1>
+                        <div class="search-container my-3">
+                            <input onkeyup="search()" id="search-input" type="text" class="form-control" placeholder="Search your contact">
+                            <div class="search-result">
+<!--                               result goes here-->
+<!--                                <h1>This is result</h1>-->
+                            </div>
+                        </div>
                         <table class="table">
                             <thead>
                             <tr>
@@ -256,6 +275,30 @@
         }else{
             $(".sidebar").css("display","block");
             $(".content").css("margin-left","20%")
+        }
+    }
+
+
+    const search = () =>{
+        let query=$("#search-input").val();
+        if(query==""){
+            $(".search-result").hide();
+        }else{
+            let url = `http://localhost:8000/search/${query}`;
+            fetch(url)
+                .then((response) =>{
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    let text = `<div class='list-group'>`;
+                    data.forEach((contact) => {
+                        text +=`<a href='#' class='list-group-item list-group-action'>${contact.name}</a>`
+                    });
+                    text += `</div>`;
+                    $(".search-result").html(text);
+                    $(".search-result").show();
+                });
         }
     }
 </script>
