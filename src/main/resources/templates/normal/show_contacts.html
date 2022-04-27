@@ -166,7 +166,7 @@
     <a  href="#" th:href="@{/user/show-contacts/0}" class="item"><i class="fas fa-id-card-alt mr-2"></i>View Contact</a>
     <a  href="#" th:href="@{/user/add-contact}" class="item"><i class="fas fa-pencil-alt mr-2"></i>Add Contact</a>
     <a  href="#" th:href="@{/user/profile}" class="item"><i class="fas fa-user-circle mr-2"></i>Your Profile</a>
-    <a  href="#" class="item"><i class="fas fa-cogs mr-2"></i>Settings</a>
+    <a  href="#" th:href="@{/user/settings}" class="item"><i class="fas fa-cogs mr-2"></i>Settings</a>
     <a  href="#" th:href="@{/logout}" class="item"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
     <div class="divider"></div>
 </div>
@@ -191,38 +191,41 @@
 <!--                                <h1>This is result</h1>-->
                             </div>
                         </div>
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">#ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="c : ${contacts}">
-                                <th scope="row" th:text="'SMCUSER' +${ c.contactId}">1</th>
-                                <th>
-                                    <img class="my_profile_picture" src="" th:src="@{'/img/'+${c.image}}" alt="profile photo">
-                                    <span th:text="${c.name}"></span>
-                                </th>
-                                <th>
-                                    <a th:href="@{'/user/'+${c.contactId}+'/contact'}" href="#">
-                                        <span th:text="${c.email}"></span>
-                                    </a>
-                                </th>
-                                <th th:text="${c.phone}">776262328</th>
-                                <th>
-                                    <a  href="#" th:onclick="|deleteContact(${c.contactId})|" class="btn btn-danger btn-sm">Delete</a>
-                                    <form method="post" th:action="@{'/user/update-contact/'+${c.contactId}}" class="mt-2">
-                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                                    </form>
-                                </th>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-ligth">
+                                <tr>
+                                    <th scope="col">#ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="c : ${contacts}">
+                                    <th scope="row" th:text="'SMCUSER' +${ c.contactId}">1</th>
+                                    <th>
+                                        <img class="my_profile_picture" src="" th:src="@{'/img/'+${c.image}}" alt="profile photo">
+                                        <span th:text="${c.name}"></span>
+                                    </th>
+                                    <th>
+                                        <a th:href="@{'/user/'+${c.contactId}+'/contact'}" href="#">
+                                            <span th:text="${c.email}"></span>
+                                        </a>
+                                    </th>
+                                    <th th:text="${c.phone}">776262328</th>
+                                    <th>
+                                        <a  href="#" th:onclick="|deleteContact(${c.contactId})|" class="btn btn-danger btn-sm">Delete</a>
+                                        <form method="post" th:action="@{'/user/update-contact/'+${c.contactId}}" class="mt-2">
+                                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                        </form>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                         <!--    pagination -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">

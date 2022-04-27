@@ -168,4 +168,9 @@ public class userController {
         model.addAttribute("title","Profile Page");
         return "normal/profile";
     }
+
+    @GetMapping("/settings")
+    public String openSettings(){
+        return "normal/settings";
+    }
 }
