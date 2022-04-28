@@ -4,6 +4,7 @@ import com.contact.manager.entity.User;
 import com.contact.manager.repository.UserRepository;
 import com.contact.manager.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,8 @@ public class ForgetController {
     private EmailService emailService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @GetMapping("/forgot")
@@ -77,5 +80,14 @@ public class ForgetController {
             session.setAttribute("message","You have entered wrong otp !!");
             return "verify_otp";
         }
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam("newpassword") String newpassword,HttpSession session){
+        String email = (String)session.getAttribute("email");
+        User user = userRepository.getUserByUserName(email);
+        user.setPassword(bCryptPasswordEncoder.encode(newpassword));
+        userRepository.save(user);
+        return "redirect:/singin?change=password changed successfully...";
     }
 }
